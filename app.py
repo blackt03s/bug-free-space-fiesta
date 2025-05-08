@@ -37,6 +37,7 @@ def clear_history():
     data = request.get_json()
     print(f'Recieved clear-history info: {data['clearHistory']} ')
     if data:
+
         terminate = data['clearHistory']
         spacer = '|'
         return_len = 0
@@ -45,19 +46,28 @@ def clear_history():
         
         index = terminate.index(spacer)
         task=terminate[6:index-1]
-        date=terminate[index+1:return_len]
+        date=terminate[index+7:return_len]
         print(f"task:{task}")
         print(f"date:{date}")
 
+        task_format = [task, date]
         
 
         # code works however have to work on this section of the code (also have to add in date) (could possibly make a for loop ex: for task, date in history : then we terminate that data)
         for x in history:
-            if task in x:
-                print(True)
+            if task and date in x:
+                # if this is true I want to remove the list
+                history.remove(x)
+
         
-    print(f"Terminate history: {terminate}")
-    return 'Clear history information recieved'
+    print(history)
+    return 'Clear history information received'
+
+    
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
 
     
 
